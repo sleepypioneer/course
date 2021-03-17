@@ -36,7 +36,7 @@ kind-update: sales-api
 	kubectl delete pods -lapp=sales-api
 
 kind-logs:
-	kubectl logs -lapp=sales-api --all-containers=true -f
+	kubectl logs -lapp=sales-api --all-containers=true -f --tail=100
 
 kind-status:
 	kubectl get nodes
