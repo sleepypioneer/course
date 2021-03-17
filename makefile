@@ -44,6 +44,9 @@ kind-status:
 
 # ==============================================================================
 
+admin:
+	go run app/admin/main.go
+
 run:
 	go run app/sales-api/main.go
 
