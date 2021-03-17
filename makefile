@@ -19,6 +19,9 @@ sales-api:
 kind-up:
 	kind create cluster --image kindest/node:v1.20.2 --name ardan-starter-cluster --config zarf/k8s/dev/kind-config.yaml
 
+kind-up-m1:
+	kind create cluster --image rossgeorgiev/kind-node-arm64 --name ardan-starter-cluster --config zarf/k8s/dev/kind-config.yaml
+
 kind-down:
 	kind delete cluster --name ardan-starter-cluster
 
@@ -33,7 +36,7 @@ kind-update: sales-api
 	kubectl delete pods -lapp=sales-api
 
 kind-logs:
-	kubectl logs -lapp=sales-api --all-containers=true -f
+	kubectl logs -lapp=sales-api --all-containers=true -f --tail=100
 
 kind-status:
 	kubectl get nodes
