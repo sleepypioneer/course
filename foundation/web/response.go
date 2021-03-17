@@ -14,7 +14,7 @@ func Respond(ctx context.Context, w http.ResponseWriter, data interface{}, statu
 	// to be shutdown gracefully.
 	v, ok := ctx.Value(KeyValues).(*Values)
 	if !ok {
-		return nil // NewShutdownError("web value missing from context")
+		return NewShutdownError("web value missing from context")
 	}
 	v.StatusCode = statusCode
 
