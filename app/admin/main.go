@@ -6,9 +6,12 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
+	"time"
 
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/pkg/errors"
 )
 
@@ -19,7 +22,69 @@ func main() {
 }
 
 func run() error {
-	return genkey()
+	// return genkey()
+	return gentoken()
+}
+
+func gentoken() error {
+	privatePEM, err := ioutil.ReadFile("./private.pem")
+	if err != nil {
+		return err
+	}
+
+	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privatePEM)
+	if err != nil {
+		return errors.Wrap(err, "parsing PEM into private key")
+	}
+
+	claims := struct {
+		jwt.StandardClaims
+		Roles []string
+	}{
+		StandardClaims: jwt.StandardClaims{
+			Issuer:    "service project",
+			Subject:   "123456789",
+			ExpiresAt: jwt.At(time.Now().Add(8760 * time.Hour)),
+			IssuedAt:  jwt.Now(),
+		},
+		Roles: []string{"ADMIN"},
+	}
+
+	method := jwt.GetSigningMethod("RS256")
+	token := jwt.NewWithClaims(method, claims)
+	str, _ := token.SignedString(privateKey)
+
+	fmt.Println("***** TOKEN BEGIN *****")
+	fmt.Println(str)
+	fmt.Println("***** TOKEN END *****")
+
+	// =========================================================================
+
+	parser := jwt.NewParser(jwt.WithValidMethods([]string{"RS256"}), jwt.WithAudience("student"))
+
+	keyFunc := func(t *jwt.Token) (interface{}, error) {
+		return &privateKey.PublicKey, nil
+	}
+
+	var clms struct {
+		jwt.StandardClaims
+		Roles []string
+	}
+
+	tkn, err := parser.ParseWithClaims(str, &clms, keyFunc)
+	if err != nil {
+		return err
+	}
+
+	if !tkn.Valid {
+		return errors.New("invalid token")
+	}
+
+	fmt.Println("\n***** TOKEN UNMARSHAL *****")
+	fmt.Printf("%+v\n", clms)
+	fmt.Println("***** TOKEN UNMARSHAL *****")
+
+	return nil
 }
 
 func genkey() error {
