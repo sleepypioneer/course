@@ -42,13 +42,13 @@ spec:
         readinessProbe:
           httpGet:
             path: /debug/readiness
-            port: 3000
+            port: 4000
           initialDelaySeconds: 30
           periodSeconds: 15
         livenessProbe:
           httpGet:
             path: /debug/liveness
-            port: 3000
+            port: 4000
           initialDelaySeconds: 15
           periodSeconds: 15
 ---
