@@ -52,6 +52,7 @@ func gentoken() error {
 
 	method := jwt.GetSigningMethod("RS256")
 	token := jwt.NewWithClaims(method, claims)
+	token.Header["kid"] = "some id to the store"
 	str, _ := token.SignedString(privateKey)
 
 	fmt.Println("***** TOKEN BEGIN *****")
