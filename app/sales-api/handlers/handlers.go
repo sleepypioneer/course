@@ -16,7 +16,10 @@ import (
 func API(build string, shutdown chan os.Signal, log *log.Logger, a *auth.Auth) *web.App {
 	app := web.NewApp(shutdown, mid.Logger(log), mid.Errors(log), mid.Metrics(), mid.Panics(log))
 
-	app.Handle(http.MethodGet, "/readiness", readiness, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
+	cg := checkGroup{build: build}
+	app.Handle(http.MethodGet, "/test", cg.test, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
+	app.HandleDebug(http.MethodGet, "/readiness", cg.readiness)
+	app.HandleDebug(http.MethodGet, "/liveness", cg.liveness)
 
 	return app
 }
