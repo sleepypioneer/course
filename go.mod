@@ -15,4 +15,5 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lib/pq v1.10.0
 	github.com/pkg/errors v0.9.1
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 )
