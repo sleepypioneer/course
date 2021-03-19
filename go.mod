@@ -10,6 +10,8 @@ require (
 	github.com/go-playground/universal-translator v0.17.0
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/google/uuid v1.2.0
+	github.com/jmoiron/sqlx v1.3.1
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/lib/pq v1.10.0
 	github.com/pkg/errors v0.9.1
 )
