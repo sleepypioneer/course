@@ -22,6 +22,13 @@ github.com/go-playground/universal-translator
 ## explicit
 github.com/go-playground/validator/v10
 github.com/go-playground/validator/v10/translations/en
+# github.com/google/go-cmp v0.3.1
+## explicit
+github.com/google/go-cmp/cmp
+github.com/google/go-cmp/cmp/internal/diff
+github.com/google/go-cmp/cmp/internal/flags
+github.com/google/go-cmp/cmp/internal/function
+github.com/google/go-cmp/cmp/internal/value
 # github.com/google/uuid v1.2.0
 ## explicit
 github.com/google/uuid
@@ -41,6 +48,9 @@ github.com/lib/pq/scram
 ## explicit
 github.com/pkg/errors
 # golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+## explicit
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
 golang.org/x/crypto/sha3
 # golang.org/x/sys v0.0.0-20190412213103-97732733099d
 golang.org/x/sys/cpu
